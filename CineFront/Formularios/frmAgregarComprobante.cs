@@ -1,10 +1,13 @@
 ﻿using CineBack.dominio;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -32,20 +35,46 @@ namespace CineFront
             btnEditar.Show();
         }
 
-        private void frmAgregarEntrada_Load(object sender, EventArgs e)
+        private async void frmAgregarEntrada_Load(object sender, EventArgs e)
         {
             txtFecha.Text = DateTime.Now.ToString("dd/MM/yyyy");
             txtPrecio.Text = 200.ToString();
 
+            //COMBO FUNCION
+            string jsonfunciones = await GetHttp("https://localhost:44301/funciones");
+            var lstfunciones = JsonConvert.DeserializeObject<List<Funcion>>(jsonfunciones);
+            cboFuncion.DataSource = lstfunciones;
+            cboFuncion.ValueMember = "IdFuncion";
+            cboFuncion.DisplayMember = "Descripcion";
+            cboFuncion.DropDownStyle = ComboBoxStyle.DropDownList;
+            cboFuncion.SelectedIndex = -1;
 
+            //COMBO CLIENTES
+            string jsonclientes = await GetHttp("https://localhost:44301/clientes");
+            var lstClientes = JsonConvert.DeserializeObject<List<Cliente>>(jsonclientes);
+            cboCliente.DataSource = lstClientes;
+            cboCliente.ValueMember = "IdCliente";
+            cboCliente.DisplayMember = "Nombre";
+            cboCliente.DropDownStyle = ComboBoxStyle.DropDownList;
+            cboCliente.SelectedIndex = -1;
 
+            //COMBO FORMA PAGO
+            string jsonFormaPagos = await GetHttp("https://localhost:44301/formaPago");
+            var lstFormaPagos = JsonConvert.DeserializeObject<List<FormaPago>>(jsonFormaPagos);
+            cboFormaPago.DataSource = lstFormaPagos;
+            cboFormaPago.ValueMember = "IdFormaPago";
+            cboFormaPago.DisplayMember = "Descripcion";
+            cboFormaPago.DropDownStyle = ComboBoxStyle.DropDownList;
+            cboFormaPago.SelectedIndex = -1;
 
-
-
-
-
-
-
+            //COMBO FORMA COMPRA
+            string jsonFormacompras = await GetHttp("https://localhost:44301/formaCompra");
+            var lstFormacompras = JsonConvert.DeserializeObject<List<FormaCompra>>(jsonFormacompras);
+            cboFormaCompra.DataSource = lstFormacompras;
+            cboFormaCompra.ValueMember = "IdFormaCompra";
+            cboFormaCompra.DisplayMember = "Descripcion";
+            cboFormaCompra.DropDownStyle = ComboBoxStyle.DropDownList;
+            cboFormaCompra.SelectedIndex = -1;
 
 
             if (comprobanteCargado != null)     //cargar datos de la pelicula seleccionada
@@ -58,6 +87,25 @@ namespace CineFront
         }
 
         //************************************* METODOS *************************************
+
+        //GET
+        public async Task<string> GetHttp(string url)
+        {
+            WebRequest oRequest = WebRequest.Create(url);
+            WebResponse oResponse = oRequest.GetResponse();
+            StreamReader sr = new StreamReader(oResponse.GetResponseStream());
+            return await sr.ReadToEndAsync();
+        }
+
+        //private async void CargarProductosAsync()
+        //{
+        //    string url = "http://localhost:5031/productos";
+        //    var result = await ClientSingleton.GetInstance().GetAsync(url);
+        //    var lst = JsonConvert.DeserializeObject<List<Producto>>(result);
+        //    cboProductos.DataSource = lst;
+        //    cboProductos.DisplayMember = "Nombre";
+        //    cboProductos.ValueMember = "ProductoNro";
+        //}
 
         //POST
 

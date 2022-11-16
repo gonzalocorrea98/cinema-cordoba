@@ -10,7 +10,13 @@ namespace CineBack.acceso_a_datos
 {
     interface IComprobanteDao
     {
-        //List<Funcion> GetEntradas();
+        List<FormaCompra> GetFormaCompra();
+
+        List<FormaPago> GetFormaPago();
+
+        List<Cliente> GetClientes();
+
+        List<Funcion> GetFunciones();
 
         List<Comprobante> GetComprobantes();
 

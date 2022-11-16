@@ -9,9 +9,11 @@ namespace CineBack.dominio
     public class Funcion
     {
         public int IdFuncion { get; set; }
-        public int IdHorarioFuncion { get; set; }
-        public int IdPelicula { get; set; }
+        public string Descripcion { get; set; }
         public double Precio { get; set; }
+
+        //public int IdHorarioFuncion { get; set; }
+        //public int IdPelicula { get; set; }
 
 
         public Funcion()
@@ -19,13 +21,16 @@ namespace CineBack.dominio
 
         }
 
-        public Funcion(int idFuncion, int idHorarioFuncion, int idPelicula, double precio)
+        public Funcion(int idFuncion, string descripcion, double precio)
         {
             IdFuncion = idFuncion;
-            IdHorarioFuncion = idHorarioFuncion;
-            IdPelicula = idPelicula;
+            Descripcion = descripcion;
             Precio = precio;
-        }
-    }
 
+            //IdHorarioFuncion = idHorarioFuncion;
+            //IdPelicula = idPelicula;
+        }
+
+
+    }
 }

@@ -12,7 +12,13 @@ namespace CineBack.fachada
     {
 
         //MAESTRO
-        //public List<Funcion> GetEntradas();
+        public List<FormaPago> GetFormaPago();
+        
+        public List<FormaCompra> GetFormaCompra();
+
+        public List<Cliente> GetClientes();
+
+        public List<Funcion> GetFunciones();
 
         public List<Comprobante> GetComprobantes();
 

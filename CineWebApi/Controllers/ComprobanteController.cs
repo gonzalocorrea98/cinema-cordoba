@@ -19,6 +19,73 @@ namespace CineWebApi.Controllers
             dataApi = new DataApiImp();
         }
 
+        //GET
+        [HttpGet("/formaCompra")]
+        public IActionResult GetFormaCompra()
+        {
+            List<FormaCompra> lst = null;
+            try
+            {
+                lst = dataApi.GetFormaCompra();
+
+                return Ok(lst);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Error interno! Intente luego");
+            }
+        }
+
+        //GET
+        [HttpGet("/formaPago")]
+        public IActionResult GetFormaPago()
+        {
+            List<FormaPago> lst = null;
+            try
+            {
+                lst = dataApi.GetFormaPago();
+
+                return Ok(lst);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Error interno! Intente luego");
+            }
+        }
+
+        //GET
+        [HttpGet("/clientes")]
+        public IActionResult GetClientes()
+        {
+            List<Cliente> lst = null;
+            try
+            {
+                lst = dataApi.GetClientes();
+
+                return Ok(lst);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Error interno! Intente luego");
+            }
+        }
+
+        // GET
+        [HttpGet("/funciones")]
+        public IActionResult GetFunciones()
+        {
+            List<Funcion> lst = null;
+            try
+            {
+                lst = dataApi.GetFunciones();
+
+                return Ok(lst);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Error interno! Intente luego");
+            }
+        }
 
         // GET
         [HttpGet("/comprobantes")]

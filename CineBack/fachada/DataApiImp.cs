@@ -25,12 +25,25 @@ namespace CineBack.fachada
             daoP = new PeliculaDao();
         }
 
+        public List<FormaPago> GetFormaPago()
+        {
+            return dao.GetFormaPago();
+        }
 
-        //MAESTRO
-        //public List<Funcion> GetEntradas()
-        //{
-        //    return dao.GetEntradas();
-        //}
+        public List<FormaCompra> GetFormaCompra()
+        {
+            return dao.GetFormaCompra();
+        }
+
+        public List<Cliente> GetClientes()
+        {
+            return dao.GetClientes();
+        }
+
+        public List<Funcion> GetFunciones()
+        {
+            return dao.GetFunciones();
+        }
 
         public List<Comprobante> GetComprobantes()
         {

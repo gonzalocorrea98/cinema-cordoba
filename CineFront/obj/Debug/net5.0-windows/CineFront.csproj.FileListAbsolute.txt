@@ -235,10 +235,8 @@ C:\Users\usuario\Desktop\CINEMA-CORDOBA\CineFront\bin\Debug\net5.0-windows\runti
 C:\Users\usuario\Desktop\CINEMA-CORDOBA\CineFront\bin\Debug\net5.0-windows\CineBack.dll
 C:\Users\usuario\Desktop\CINEMA-CORDOBA\CineFront\bin\Debug\net5.0-windows\CineBack.pdb
 C:\Users\usuario\Desktop\CINEMA-CORDOBA\CineFront\obj\Debug\net5.0-windows\CineFront.csproj.AssemblyReference.cache
-C:\Users\usuario\Desktop\CINEMA-CORDOBA\CineFront\obj\Debug\net5.0-windows\CineFront.frmAgregarEntrada.resources
 C:\Users\usuario\Desktop\CINEMA-CORDOBA\CineFront\obj\Debug\net5.0-windows\CineFront.frmAgregarPelicula.resources
 C:\Users\usuario\Desktop\CINEMA-CORDOBA\CineFront\obj\Debug\net5.0-windows\CineFront.frmConocenos.resources
-C:\Users\usuario\Desktop\CINEMA-CORDOBA\CineFront\obj\Debug\net5.0-windows\CineFront.frmEntradas.resources
 C:\Users\usuario\Desktop\CINEMA-CORDOBA\CineFront\obj\Debug\net5.0-windows\CineFront.frmHome.resources
 C:\Users\usuario\Desktop\CINEMA-CORDOBA\CineFront\obj\Debug\net5.0-windows\Cine.frmLogin.resources
 C:\Users\usuario\Desktop\CINEMA-CORDOBA\CineFront\obj\Debug\net5.0-windows\CineFront.frmPeliculas.resources
@@ -256,3 +254,5 @@ C:\Users\usuario\Desktop\CINEMA-CORDOBA\CineFront\obj\Debug\net5.0-windows\CineF
 C:\Users\usuario\Desktop\CINEMA-CORDOBA\CineFront\obj\Debug\net5.0-windows\ref\CineFront.dll
 C:\Users\ger4r\Desktop\Prog II\TPIprogramacion\CineFront\obj\Debug\net5.0-windows\CineFront.frmAgregarComprobante.resources
 C:\Users\ger4r\Desktop\Prog II\TPIprogramacion\CineFront\obj\Debug\net5.0-windows\CineFront.frmComprobantes.resources
+C:\Users\usuario\Desktop\CINEMA-CORDOBA\CineFront\obj\Debug\net5.0-windows\CineFront.frmAgregarComprobante.resources
+C:\Users\usuario\Desktop\CINEMA-CORDOBA\CineFront\obj\Debug\net5.0-windows\CineFront.frmComprobantes.resources

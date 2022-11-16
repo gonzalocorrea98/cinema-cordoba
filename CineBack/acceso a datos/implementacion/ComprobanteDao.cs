@@ -11,6 +11,85 @@ namespace CineBack.acceso_a_datos
 {
     class ComprobanteDao : IComprobanteDao
     {
+        //MOSTRAR FORMA PAGO
+        public List<FormaPago> GetFormaPago()
+        {
+            List<FormaPago> lst = new List<FormaPago>();
+
+            string sp = "SP_CONSULTAR_FORMA_PAGO";
+            DataTable t = HelperDao.ObtenerInstancia().ConsultaSQL(sp, null);
+
+            foreach (DataRow dr in t.Rows)
+            {
+                FormaPago aux = new FormaPago();
+                aux.IdFormaPago = int.Parse(dr["id_forma_pago"].ToString());
+                aux.Descripcion = dr["descripcion"].ToString();
+
+                lst.Add(aux);
+            }
+            return lst;
+        }
+
+
+        //MOSTRAR FORMA COMPRA
+        public List<FormaCompra> GetFormaCompra()
+        {
+            List<FormaCompra> lst = new List<FormaCompra>();
+
+            string sp = "SP_CONSULTAR_FORMA_COMPRA";
+            DataTable t = HelperDao.ObtenerInstancia().ConsultaSQL(sp, null);
+
+            foreach (DataRow dr in t.Rows)
+            {
+                FormaCompra aux = new FormaCompra();
+                aux.IdFormaCompra = int.Parse(dr["id_forma_compra"].ToString());
+                aux.Descripcion = dr["descripcion"].ToString();
+
+                lst.Add(aux);
+            }
+            return lst;
+        }
+
+
+        //MOSTRAR CLIENTES
+        public List<Cliente> GetClientes()
+        {
+            List<Cliente> clientes = new List<Cliente>();
+
+            string sp = "SP_CONSULTAR_CLIENTES";
+            DataTable t = HelperDao.ObtenerInstancia().ConsultaSQL(sp, null);
+
+            foreach (DataRow dr in t.Rows)
+            {
+                Cliente aux = new Cliente();
+                aux.IdCliente = int.Parse(dr["id_cliente"].ToString());
+                aux.Nombre = dr["nombre"].ToString();
+
+                clientes.Add(aux);
+            }
+            return clientes;
+        }
+
+
+        //MOSTRAR FUNCIONES
+        public List<Funcion> GetFunciones()
+        {
+            List<Funcion> funciones = new List<Funcion>();
+
+            string sp = "SP_CONSULTAR_FUNCIONES";
+            DataTable t = HelperDao.ObtenerInstancia().ConsultaSQL(sp, null);
+
+            foreach (DataRow dr in t.Rows)
+            {
+                Funcion aux = new Funcion();
+                aux.IdFuncion   = int.Parse(dr["id_funcion"].ToString());
+                aux.Descripcion = dr["descripcion"].ToString();
+                aux.Precio      = double.Parse(dr["precio"].ToString());
+
+                funciones.Add(aux);
+            }
+            return funciones;
+        }
 
         //MOSTRAR COMPROBANTES
         public List<Comprobante> GetComprobantes()
@@ -24,11 +103,11 @@ namespace CineBack.acceso_a_datos
             {
                 Comprobante aux = new Comprobante();
                 aux.IdComprobante = int.Parse(dr["id_comprobante"].ToString());
-                aux.IdCliente = int.Parse(dr["id_cliente"].ToString());
-                aux.IdFormaPago = int.Parse(dr["id_forma_pago"].ToString());
+                aux.IdCliente     = int.Parse(dr["id_cliente"].ToString());
+                aux.IdFormaPago   = int.Parse(dr["id_forma_pago"].ToString());
                 aux.IdFormaCompra = int.Parse(dr["id_forma_compra"].ToString());
-                aux.Fecha = DateTime.Parse(dr["fecha"].ToString());
-                aux.IdEstado = int.Parse(dr["id_estado"].ToString());
+                aux.Fecha         = DateTime.Parse(dr["fecha"].ToString());
+                aux.IdEstado      = int.Parse(dr["id_estado"].ToString());
 
                 comprobantes.Add(aux);
             }
