@@ -17,9 +17,9 @@ using System.Windows.Forms;
 
 namespace CineFront
 {
-    public partial class frmEntradas : Form
+    public partial class frmComprobantes : Form
     {
-        public frmEntradas()
+        public frmComprobantes()
         {
             InitializeComponent();
         }
@@ -27,7 +27,7 @@ namespace CineFront
         private async void frmEntradas_Load(object sender, EventArgs e)
         {
             string respuesta = await GetHttp();
-            List<Funcion> lst = JsonConvert.DeserializeObject<List<Funcion>>(respuesta);
+            List<Comprobante> lst = JsonConvert.DeserializeObject<List<Comprobante>>(respuesta);
             dgvEntradas.DataSource = lst;
         }
 
@@ -36,7 +36,7 @@ namespace CineFront
         //GET
         public async Task<string> GetHttp()
         {
-            string url = "https://localhost:44301/entradas";
+            string url = "https://localhost:44301/comprobantes";
 
             WebRequest oRequest = WebRequest.Create(url);
             WebResponse oResponse = oRequest.GetResponse();

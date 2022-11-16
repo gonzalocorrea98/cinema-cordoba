@@ -39,7 +39,7 @@ namespace CineFront
         private void btnCancelar_Click(object sender, EventArgs e)
         {
             this.Close();
-            frmEntradas formularioEntradas = new frmEntradas();
+            frmComprobantes formularioEntradas = new frmComprobantes();
             formularioEntradas.Show();
         }
 
