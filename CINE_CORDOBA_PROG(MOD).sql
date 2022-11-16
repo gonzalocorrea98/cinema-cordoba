@@ -551,15 +551,42 @@ END
 
 GO
 
+--SP_CONSULTAR_FUNCIONES
+CREATE PROC SP_CONSULTAR_FUNCIONES
+AS
+BEGIN
+	SELECT id_funcion, precio, p.nombre_pelicula + ' | ' + CONVERT(varchar, h.horario , 108) AS descripcion
+	FROM FUNCIONES f join PELICULAS p on f.id_pelicula = p.id_pelicula
+					 join HORARIOS_FUNCIONES h on f.id_horario_funcion = h.id_horario_funcion 
+END
+GO
 
 
+--SP_CONSULTAR_CLIENTES
+CREATE PROC SP_CONSULTAR_CLIENTES
+AS
+BEGIN
+	SELECT id_cliente, apellido_cliente + ', ' + nombre_cliente AS nombre
+	FROM CLIENTES
+END
 
 
+--SP CONSULTAR FORMA PAGO
+CREATE PROC SP_CONSULTAR_FORMA_PAGO
+AS
+BEGIN
+	SELECT id_forma_pago, forma_pago + ' (' + descripcion + ')' as descripcion
+	FROM FORMAS_PAGOS
+END
 
 
-
-
-
+--SP CONSULTAR FORMA PAGO
+CREATE PROC SP_CONSULTAR_FORMA_COMPRA
+AS
+BEGIN
+	SELECT id_forma_compra, forma_compra + ' (' + descripcion + ')' as descripcion
+	FROM FORMAS_COMPRAS
+END
 
 
 

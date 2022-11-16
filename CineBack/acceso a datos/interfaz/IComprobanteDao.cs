@@ -18,7 +18,7 @@ namespace CineBack.acceso_a_datos
 
         List<Funcion> GetFunciones();
 
-        List<Comprobante> GetComprobantes();
+        List<ViewComprobante> GetComprobantes();
 
         bool Crear(Comprobante oComprobante);
 

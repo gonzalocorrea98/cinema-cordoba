@@ -36,6 +36,11 @@
             this.btnAceptar = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
             this.dgvComprobante = new System.Windows.Forms.DataGridView();
+            this.ColID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColProducto = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColPrecio = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColCantidad = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColAcciones = new System.Windows.Forms.DataGridViewButtonColumn();
             this.cboFuncion = new System.Windows.Forms.ComboBox();
             this.cboCliente = new System.Windows.Forms.ComboBox();
             this.lblFuncion = new System.Windows.Forms.Label();
@@ -48,7 +53,7 @@
             this.cboFormaCompra = new System.Windows.Forms.ComboBox();
             this.lblFormaPago = new System.Windows.Forms.Label();
             this.cboFormaPago = new System.Windows.Forms.ComboBox();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btnAgregar = new System.Windows.Forms.Button();
             this.txtPrecio = new System.Windows.Forms.TextBox();
             this.lblPrecio = new System.Windows.Forms.Label();
             this.btnEditar = new System.Windows.Forms.Button();
@@ -128,6 +133,7 @@
             this.btnAceptar.TabIndex = 7;
             this.btnAceptar.Text = "Aceptar";
             this.btnAceptar.UseVisualStyleBackColor = false;
+            this.btnAceptar.Click += new System.EventHandler(this.btnAceptar_Click);
             // 
             // label6
             // 
@@ -146,11 +152,57 @@
             // dgvComprobante
             // 
             this.dgvComprobante.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvComprobante.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.ColID,
+            this.ColProducto,
+            this.ColPrecio,
+            this.ColCantidad,
+            this.ColAcciones});
             this.dgvComprobante.Location = new System.Drawing.Point(218, 239);
             this.dgvComprobante.Name = "dgvComprobante";
+            this.dgvComprobante.ReadOnly = true;
             this.dgvComprobante.RowTemplate.Height = 25;
             this.dgvComprobante.Size = new System.Drawing.Size(573, 235);
             this.dgvComprobante.TabIndex = 20;
+            this.dgvComprobante.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvComprobante_CellContentClick);
+            // 
+            // ColID
+            // 
+            this.ColID.HeaderText = "ID";
+            this.ColID.Name = "ColID";
+            this.ColID.ReadOnly = true;
+            this.ColID.Visible = false;
+            // 
+            // ColProducto
+            // 
+            this.ColProducto.FillWeight = 200F;
+            this.ColProducto.HeaderText = "Producto";
+            this.ColProducto.Name = "ColProducto";
+            this.ColProducto.ReadOnly = true;
+            this.ColProducto.Width = 300;
+            // 
+            // ColPrecio
+            // 
+            this.ColPrecio.HeaderText = "Precio";
+            this.ColPrecio.Name = "ColPrecio";
+            this.ColPrecio.ReadOnly = true;
+            this.ColPrecio.Width = 80;
+            // 
+            // ColCantidad
+            // 
+            this.ColCantidad.HeaderText = "Cantidad";
+            this.ColCantidad.Name = "ColCantidad";
+            this.ColCantidad.ReadOnly = true;
+            this.ColCantidad.Width = 70;
+            // 
+            // ColAcciones
+            // 
+            this.ColAcciones.HeaderText = "Acciones";
+            this.ColAcciones.Name = "ColAcciones";
+            this.ColAcciones.ReadOnly = true;
+            this.ColAcciones.Text = "Quitar";
+            this.ColAcciones.UseColumnTextForButtonValue = true;
+            this.ColAcciones.Width = 80;
             // 
             // cboFuncion
             // 
@@ -159,7 +211,7 @@
             this.cboFuncion.FormattingEnabled = true;
             this.cboFuncion.Location = new System.Drawing.Point(407, 86);
             this.cboFuncion.Name = "cboFuncion";
-            this.cboFuncion.Size = new System.Drawing.Size(188, 25);
+            this.cboFuncion.Size = new System.Drawing.Size(255, 25);
             this.cboFuncion.TabIndex = 1;
             // 
             // cboCliente
@@ -277,22 +329,23 @@
             this.cboFormaPago.Size = new System.Drawing.Size(255, 25);
             this.cboFormaPago.TabIndex = 5;
             // 
-            // button1
+            // btnAgregar
             // 
-            this.button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(163)))), ((int)(((byte)(27)))), ((int)(((byte)(39)))));
-            this.button1.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(191)))), ((int)(((byte)(55)))));
-            this.button1.FlatAppearance.BorderSize = 2;
-            this.button1.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Maroon;
-            this.button1.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Brown;
-            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button1.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.button1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(191)))), ((int)(((byte)(55)))));
-            this.button1.Location = new System.Drawing.Point(680, 208);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(67, 25);
-            this.button1.TabIndex = 6;
-            this.button1.Text = "Agregar";
-            this.button1.UseVisualStyleBackColor = false;
+            this.btnAgregar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(163)))), ((int)(((byte)(27)))), ((int)(((byte)(39)))));
+            this.btnAgregar.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(191)))), ((int)(((byte)(55)))));
+            this.btnAgregar.FlatAppearance.BorderSize = 2;
+            this.btnAgregar.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Maroon;
+            this.btnAgregar.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Brown;
+            this.btnAgregar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnAgregar.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btnAgregar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(191)))), ((int)(((byte)(55)))));
+            this.btnAgregar.Location = new System.Drawing.Point(680, 208);
+            this.btnAgregar.Name = "btnAgregar";
+            this.btnAgregar.Size = new System.Drawing.Size(67, 25);
+            this.btnAgregar.TabIndex = 6;
+            this.btnAgregar.Text = "Agregar";
+            this.btnAgregar.UseVisualStyleBackColor = false;
+            this.btnAgregar.Click += new System.EventHandler(this.btnAgregar_Click);
             // 
             // txtPrecio
             // 
@@ -332,6 +385,7 @@
             this.btnEditar.TabIndex = 38;
             this.btnEditar.Text = "Editar";
             this.btnEditar.UseVisualStyleBackColor = false;
+            this.btnEditar.Click += new System.EventHandler(this.btnEditar_Click);
             // 
             // frmAgregarComprobante
             // 
@@ -342,7 +396,7 @@
             this.Controls.Add(this.btnEditar);
             this.Controls.Add(this.lblPrecio);
             this.Controls.Add(this.txtPrecio);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.btnAgregar);
             this.Controls.Add(this.lblFormaPago);
             this.Controls.Add(this.cboFormaPago);
             this.Controls.Add(this.lblFormaCompra);
@@ -397,9 +451,14 @@
         private System.Windows.Forms.ComboBox cboFormaCompra;
         private System.Windows.Forms.Label lblFormaPago;
         private System.Windows.Forms.ComboBox cboFormaPago;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnAgregar;
         private System.Windows.Forms.TextBox txtPrecio;
         private System.Windows.Forms.Label lblPrecio;
         private System.Windows.Forms.Button btnEditar;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColID;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColProducto;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColPrecio;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColCantidad;
+        private System.Windows.Forms.DataGridViewButtonColumn ColAcciones;
     }
 }

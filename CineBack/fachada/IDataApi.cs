@@ -20,7 +20,7 @@ namespace CineBack.fachada
 
         public List<Funcion> GetFunciones();
 
-        public List<Comprobante> GetComprobantes();
+        public List<ViewComprobante> GetComprobantes();
 
         public bool SaveComprobante(Comprobante comprobante);
 

@@ -92,27 +92,36 @@ namespace CineBack.acceso_a_datos
         }
 
         //MOSTRAR COMPROBANTES
-        public List<Comprobante> GetComprobantes()
+        public List<ViewComprobante> GetComprobantes()
         {
-            List<Comprobante> comprobantes = new List<Comprobante>();
+            List<ViewComprobante> comprobantes = new List<ViewComprobante>();
 
             string sp = "SP_CONSULTAR_COMPROBANTES";
             DataTable t = HelperDao.ObtenerInstancia().ConsultaSQL(sp, null);
 
             foreach (DataRow dr in t.Rows)
             {
-                Comprobante aux = new Comprobante();
+                ViewComprobante aux = new ViewComprobante();
                 aux.IdComprobante = int.Parse(dr["id_comprobante"].ToString());
-                aux.IdCliente     = int.Parse(dr["id_cliente"].ToString());
-                aux.IdFormaPago   = int.Parse(dr["id_forma_pago"].ToString());
-                aux.IdFormaCompra = int.Parse(dr["id_forma_compra"].ToString());
+                aux.Cliente     = dr["cliente"].ToString();
+                aux.FormaPago   = dr["forma_pago"].ToString();
+                aux.FormaCompra = dr["forma_compra"].ToString();
+                aux.Total = double.Parse(dr["total"].ToString());
                 aux.Fecha         = DateTime.Parse(dr["fecha"].ToString());
-                aux.IdEstado      = int.Parse(dr["id_estado"].ToString());
 
                 comprobantes.Add(aux);
             }
             return comprobantes;
         }
+
+        //POR SI FALLA
+        //Comprobante aux = new Comprobante();
+        //aux.IdComprobante = int.Parse(dr["id_comprobante"].ToString());
+        //aux.IdCliente     = int.Parse(dr["id_cliente"].ToString());
+        //aux.IdFormaPago   = int.Parse(dr["id_forma_pago"].ToString());
+        //aux.IdFormaCompra = int.Parse(dr["id_forma_compra"].ToString());
+        //aux.Fecha         = DateTime.Parse(dr["fecha"].ToString());
+        //        aux.IdEstado      = int.Parse(dr["id_estado"].ToString());
 
 
         //CREAR COMPROBANTES

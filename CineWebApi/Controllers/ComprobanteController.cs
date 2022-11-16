@@ -91,7 +91,7 @@ namespace CineWebApi.Controllers
         [HttpGet("/comprobantes")]
         public IActionResult GetComprobantes()
         {
-            List<Comprobante> lst = null;
+            List<ViewComprobante> lst = null;
             try
             {
                 lst = dataApi.GetComprobantes();

@@ -45,7 +45,7 @@ namespace CineBack.fachada
             return dao.GetFunciones();
         }
 
-        public List<Comprobante> GetComprobantes()
+        public List<ViewComprobante> GetComprobantes()
         {
             return dao.GetComprobantes();
         }

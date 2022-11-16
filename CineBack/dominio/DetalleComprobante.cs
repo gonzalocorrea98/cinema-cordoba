@@ -18,6 +18,12 @@ namespace CineBack.dominio
 
         }
 
+        public DetalleComprobante(Funcion funcion, int cantidad)
+        {
+            Funcion = funcion;
+            Cantidad = cantidad;
+        }
+
         public DetalleComprobante(int idDetalleComprobante, int idComprobante, Funcion funcion, int cantidad)
         {
             IdDetalleComprobante = idDetalleComprobante;

@@ -1,4 +1,5 @@
 ﻿using CineBack.dominio;
+using CineBack.soporte;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -8,21 +9,26 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
+//using System.Text.Json;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using RestSharp.Serialization.Json;
 
 namespace CineFront
 {
     public partial class frmAgregarComprobante : Form
     {
         private Comprobante comprobanteCargado = null;
-        
+        private Comprobante comprobanteNuevo;
+        frmComprobantes formComprobantes = new frmComprobantes();
 
         public frmAgregarComprobante()
         {
             InitializeComponent();
+            comprobanteNuevo = new Comprobante();
             btnAceptar.Show();
             btnEditar.Hide();
         }
@@ -97,25 +103,112 @@ namespace CineFront
             return await sr.ReadToEndAsync();
         }
 
-        //private async void CargarProductosAsync()
-        //{
-        //    string url = "http://localhost:5031/productos";
-        //    var result = await ClientSingleton.GetInstance().GetAsync(url);
-        //    var lst = JsonConvert.DeserializeObject<List<Producto>>(result);
-        //    cboProductos.DataSource = lst;
-        //    cboProductos.DisplayMember = "Nombre";
-        //    cboProductos.ValueMember = "ProductoNro";
-        //}
-
         //POST
+        public async Task<string> PostComprobante(Comprobante comprobante)
+        {
+            string url = "https://localhost:44301/cargarComprobante";
+            var client = new HttpClient();
+
+            var data = JsonConvert.SerializeObject(comprobante);
+            HttpContent content = new StringContent(data, System.Text.Encoding.UTF8, "application/json");
+            var HttpResponse = await client.PostAsync(url, content);
+
+            if (HttpResponse.IsSuccessStatusCode)
+            {
+                MessageBox.Show("Se cargo con exito la compra");
+                return "OK";
+            }
+            MessageBox.Show("Hubo un error al cargar la compra");
+            return "false";
+        }
 
         //PUT
+        public async Task<string> PutComprobante(Comprobante comprobante)
+        {
+            string url = "https://localhost:44301/actualizarComprobante";
+            var client = new HttpClient();
 
+            var data = JsonConvert.SerializeObject(comprobante);
+            HttpContent content = new StringContent(data, System.Text.Encoding.UTF8, "application/json");
+            var HttpResponse = await client.PutAsync(url, content);
+
+            if (HttpResponse.IsSuccessStatusCode)
+            {
+                MessageBox.Show("Se edito con exito la compra");
+                return "OK";
+            }
+            MessageBox.Show("Hubo un error al cargar la compra");
+            return "false";
+        }
         //************************************* BOTONES *************************************
 
-        //AGREGAR
+        //AGREGAR FUNCION
+        private void btnAgregar_Click(object sender, EventArgs e)
+        {
+            Funcion funcion = (Funcion)cboFuncion.SelectedItem;
+            funcion.Precio = int.Parse(txtPrecio.Text);
+            int cantidad = Convert.ToInt32(nudCantidad.Value);
+
+            DetalleComprobante detalle = new DetalleComprobante(funcion, cantidad);
+            comprobanteNuevo.AgregarDetalle(detalle);
+            dgvComprobante.Rows.Add(new object[] { funcion.IdFuncion, funcion.Descripcion, funcion.Precio, nudCantidad.Value});
+        }
+
+        //ELIMINAR FUNCION
+        private void dgvComprobante_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (dgvComprobante.CurrentCell.ColumnIndex == 4)
+            {
+                comprobanteNuevo.QuitarDetalle(dgvComprobante.CurrentRow.Index);
+                dgvComprobante.Rows.Remove(dgvComprobante.CurrentRow);
+            }
+        }
 
         //EDITAR
+        private async void btnEditar_Click(object sender, EventArgs e)
+        {
+            if (cboCliente.SelectedIndex == -1)
+            {
+                MessageBox.Show("Debe ingresar un cliente!", "Control", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+            if (dgvComprobante.Rows.Count == 0)
+            {
+                MessageBox.Show("Debe ingresar al menos una funcion!", "Control", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+
+            comprobanteNuevo.IdCliente = (int)cboCliente.SelectedValue;
+            comprobanteNuevo.IdFormaCompra = (int)cboFormaCompra.SelectedValue;
+            comprobanteNuevo.IdFormaPago = (int)cboFormaPago.SelectedValue;
+
+            await PutComprobante(comprobanteNuevo);
+            formComprobantes.Show();
+            this.Close();
+        }
+
+        //CARGAR
+        private async void btnAceptar_Click(object sender, EventArgs e)
+        {
+            if (cboCliente.SelectedIndex == -1)
+            {
+                MessageBox.Show("Debe ingresar un cliente!", "Control", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+            if (dgvComprobante.Rows.Count == 0)
+            {
+                MessageBox.Show("Debe ingresar al menos una funcion!", "Control", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+
+            comprobanteNuevo.IdCliente = (int)cboCliente.SelectedValue;
+            comprobanteNuevo.IdFormaCompra = (int)cboFormaCompra.SelectedValue;
+            comprobanteNuevo.IdFormaPago = (int)cboFormaPago.SelectedValue;
+
+            await PostComprobante(comprobanteNuevo);
+            formComprobantes.Show();
+            this.Close();
+        }
 
         //CANCELAR
         private void btnCancelar_Click(object sender, EventArgs e)
@@ -171,7 +264,5 @@ namespace CineFront
                 return; 
             }
         }
-
-        
     }
 }

@@ -9,6 +9,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Runtime.InteropServices;
 using System.Security.Policy;
 using System.Text;
@@ -25,14 +26,34 @@ namespace CineFront
             InitializeComponent();
         }
 
-        private async void frmEntradas_Load(object sender, EventArgs e)
+        private void frmEntradas_Load(object sender, EventArgs e)
         {
-            string respuesta = await GetHttp();
-            List<Comprobante> lst = JsonConvert.DeserializeObject<List<Comprobante>>(respuesta);
-            dgvEntradas.DataSource = lst;
+            cargarDataGrid();
+        }
+
+        private void dgvEntradas_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (dgvEntradas.CurrentRow != null)
+            {
+                btnEditar.Enabled = true;
+                btnEliminar.Enabled = true;
+            }
         }
 
         //************************************* METODOS *************************************
+
+        //CARGAR DATAGRID
+        private async void cargarDataGrid()
+        {
+            string respuesta = await GetHttp();
+            List<ViewComprobante> lst = JsonConvert.DeserializeObject<List<ViewComprobante>>(respuesta);
+            dgvEntradas.DataSource = lst;
+
+            btnEditar.Enabled = false;
+            btnEliminar.Enabled = false;
+
+            dgvEntradas.Refresh();
+        }
 
         //GET
         public async Task<string> GetHttp()
@@ -46,6 +67,22 @@ namespace CineFront
         }
 
         //DELETE
+        public async Task<string> DeleteHttp(int id)
+        {
+            string url = "https://localhost:44301/borrarComprobante?nro=" + id;
+            var client = new HttpClient();
+
+            var HttpResponse = await client.DeleteAsync(url);
+
+            if (HttpResponse.IsSuccessStatusCode)
+            {
+                MessageBox.Show("Se dio de baja la compra con exito");
+                return "OK";
+            }
+            MessageBox.Show("Hubo un error a dar de baja la compra");
+            return "false";
+        }
+
 
         //************************************* BOTONES *************************************
 
@@ -72,9 +109,22 @@ namespace CineFront
         }
 
         //ELIMINAR
-        private void btnEliminar_Click(object sender, EventArgs e)
+        private async void btnEliminar_Click(object sender, EventArgs e)
         {
+            if (dgvEntradas.CurrentRow != null)
+            {
+                int id = (int)dgvEntradas.CurrentRow.Cells[0].Value;
 
+                var confirmacion =
+                    MessageBox.Show("Esta por eliminar la compra del cliente: " + dgvEntradas.CurrentRow.Cells["cliente"].Value, "ALERTA", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2);
+
+                if (confirmacion == DialogResult.OK)
+                {
+                    await DeleteHttp(id);
+                    cargarDataGrid();
+                }
+                dgvEntradas.Refresh();
+            }
         }
 
         //VOLVER
