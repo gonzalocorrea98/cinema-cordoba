@@ -489,7 +489,7 @@ END
 
 GO
 --INSERTAR MAESTRO
-Alter PROC SP_INSERTAR_MAESTRO
+create PROC SP_INSERTAR_MAESTRO
 	@idCliente INT,
 	@idFormaPago INT,
 	@idFormaCompra INT,

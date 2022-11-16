@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CineBack.dominio;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -11,16 +12,49 @@ using System.Windows.Forms;
 
 namespace CineFront
 {
-    public partial class frmAgregarEntrada : Form
+    public partial class frmAgregarComprobante : Form
     {
-        public frmAgregarEntrada()
+        private Comprobante comprobanteCargado = null;
+        
+
+        public frmAgregarComprobante()
         {
             InitializeComponent();
+            btnAceptar.Show();
+            btnEditar.Hide();
+        }
+
+        public frmAgregarComprobante(Comprobante comprobanteCargado)
+        {
+            InitializeComponent();
+            this.comprobanteCargado = comprobanteCargado;
+            btnAceptar.Hide();
+            btnEditar.Show();
         }
 
         private void frmAgregarEntrada_Load(object sender, EventArgs e)
         {
+            txtFecha.Text = DateTime.Now.ToString("dd/MM/yyyy");
+            txtPrecio.Text = 200.ToString();
 
+
+
+
+
+
+
+
+
+
+
+
+            if (comprobanteCargado != null)     //cargar datos de la pelicula seleccionada
+            {
+                txtFecha.Text = comprobanteCargado.Fecha.ToString();
+                cboCliente.SelectedValue = comprobanteCargado.IdCliente;
+                cboFormaCompra.SelectedValue = comprobanteCargado.IdFormaCompra;
+                cboFormaPago.SelectedValue = comprobanteCargado.IdFormaPago;
+            }
         }
 
         //************************************* METODOS *************************************
@@ -39,8 +73,8 @@ namespace CineFront
         private void btnCancelar_Click(object sender, EventArgs e)
         {
             this.Close();
-            frmComprobantes formularioEntradas = new frmComprobantes();
-            formularioEntradas.Show();
+            frmComprobantes comprobantes = new frmComprobantes();
+            comprobantes.Show();
         }
 
         //SALIR
@@ -79,5 +113,17 @@ namespace CineFront
             ReleaseCapture();
             SendMessage(this.Handle, 0x112, 0xf012, 0);
         }
+
+        private void txtPrecio_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if((e.KeyChar >= 32 && e.KeyChar <= 47) || (e.KeyChar >=58 && e.KeyChar <= 255))
+            {
+                MessageBox.Show("Sólo Números.", "ALERTA", MessageBoxButtons.OK, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1);
+                e.Handled = true;
+                return; 
+            }
+        }
+
+        
     }
 }

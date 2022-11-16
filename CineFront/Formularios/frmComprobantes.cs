@@ -19,6 +19,7 @@ namespace CineFront
 {
     public partial class frmComprobantes : Form
     {
+        
         public frmComprobantes()
         {
             InitializeComponent();
@@ -51,15 +52,23 @@ namespace CineFront
         //AGREGAR
         private void btnAgregar_Click_1(object sender, EventArgs e)
         {
-            frmAgregarEntrada agregarEntrada = new frmAgregarEntrada();
-            agregarEntrada.Show();
+            frmAgregarComprobante agregarComprobante = new frmAgregarComprobante();
+            agregarComprobante.Show();
             this.Close();
         }
 
         //EDITAR
         private void btnEditar_Click(object sender, EventArgs e)
         {
+            if (dgvEntradas.CurrentRow != null)
+            {
+                Comprobante comprobanteSeleccionado;
+                comprobanteSeleccionado = (Comprobante)dgvEntradas.CurrentRow.DataBoundItem;
 
+                frmAgregarComprobante editarComprobante = new frmAgregarComprobante(comprobanteSeleccionado);
+                editarComprobante.Show();
+                this.Close();
+            }
         }
 
         //ELIMINAR
